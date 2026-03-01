@@ -1,12 +1,28 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Toolbar, ToolbarWidget } from '@angular/aria/toolbar';
+import { TaskService } from './services/task.service';
+import { slideIn } from './animations/task.animations';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    Toolbar,
+    ToolbarWidget,
+  ],
+  animations: [slideIn],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('angularv21');
+  protected readonly title = signal('Task Manager');
+  protected readonly taskService = inject(TaskService);
 }
