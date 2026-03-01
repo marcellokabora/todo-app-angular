@@ -17,11 +17,16 @@ const MOCK_USERS: User[] = [
     { id: '13', name: 'Mia Robinson', email: 'mia@example.com', avatar: 'MR' },
     { id: '14', name: 'Noah Clark', email: 'noah@example.com', avatar: 'NC' },
     { id: '15', name: 'Olivia Wright', email: 'olivia@example.com', avatar: 'OW' },
+    { id: '16', name: 'Marcello Kabora', email: 'marcellokabora@gmail.com', avatar: 'MK' },
 ];
+
+const MOCK_PASSWORD = '1234';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
     readonly users = signal<User[]>(MOCK_USERS);
+    readonly currentUser = signal<User | null>(null);
+    readonly isAuthenticated = computed(() => this.currentUser() !== null);
 
     readonly userNames = computed(() => this.users().map((u) => u.name));
 
@@ -35,5 +40,17 @@ export class UserService {
         return this.users().filter(
             (u) => u.name.toLowerCase().includes(lower) || u.email.toLowerCase().includes(lower),
         );
+    }
+
+    login(email: string, password: string): boolean {
+        if (password !== MOCK_PASSWORD) return false;
+        const user = this.users().find((u) => u.email.toLowerCase() === email.toLowerCase());
+        if (!user) return false;
+        this.currentUser.set(user);
+        return true;
+    }
+
+    logout(): void {
+        this.currentUser.set(null);
     }
 }
