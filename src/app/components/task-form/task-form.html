@@ -43,8 +43,8 @@
             <label class="mb-1 block text-sm font-medium text-body">
                 Priority <span class="text-red-500">*</span>
             </label>
-            <app-aria-select [value]="taskModel().priority" (valueChange)="onPriorityChange($event)"
-                [options]="priorityOptions" label="Task priority" placeholder="Select priority..." />
+            <app-aria-select [formField]="taskForm.priority" [options]="priorityOptions" label="Task priority"
+                placeholder="Select priority..." />
         </div>
 
         <!-- Category -->
@@ -52,8 +52,8 @@
             <label class="mb-1 block text-sm font-medium text-body">
                 Category <span class="text-red-500">*</span>
             </label>
-            <app-aria-select [value]="taskModel().category" (valueChange)="onCategoryChange($event)"
-                [options]="categoryOptions" label="Task category" placeholder="Select category..." />
+            <app-aria-select [formField]="taskForm.category" [options]="categoryOptions" label="Task category"
+                placeholder="Select category..." />
         </div>
     </div>
 
@@ -62,8 +62,8 @@
         <label class="mb-1 block text-sm font-medium text-body">
             Tags <span class="text-red-500">*</span>
         </label>
-        <app-aria-multiselect [value]="taskModel().tags" (valueChange)="onTagsChange($event)" [options]="tagOptions"
-            label="Task tags" placeholder="Select tags..." />
+        <app-aria-multiselect [formField]="taskForm.tags" [options]="tagOptions" label="Task tags"
+            placeholder="Select tags..." />
         @if (taskForm.tags().touched() && taskForm.tags().errors(); as errors) {
         <div class="mt-1 text-xs text-red-500" role="alert">
             @for (err of errors; track err.kind) {
@@ -78,8 +78,8 @@
         <label class="mb-1 block text-sm font-medium text-body">
             Assignee <span class="text-red-500">*</span>
         </label>
-        <app-aria-autocomplete [value]="taskModel().assignee" (valueChange)="onAssigneeChange($event)"
-            [options]="userOptions()" label="Task assignee" placeholder="Search for a team member..." />
+        <app-aria-autocomplete [formField]="taskForm.assignee" [options]="userOptions()" label="Task assignee"
+            placeholder="Search for a team member..." />
         @if (taskForm.assignee().touched() && taskForm.assignee().errors(); as errors) {
         <div class="mt-1 text-xs text-red-500" role="alert">
             @for (err of errors; track err.kind) {

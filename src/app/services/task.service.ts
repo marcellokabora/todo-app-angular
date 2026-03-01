@@ -1,5 +1,7 @@
-import { computed, inject, Injectable, linkedSignal, resource, signal } from '@angular/core';
+import { computed, effect, Injectable, linkedSignal, resource, signal } from '@angular/core';
 import { Task, TaskCategory, TaskPriority, TaskStatus } from '../models/task.model';
+
+const STORAGE_KEY = 'mock-tasks';
 
 const MOCK_TASKS: Task[] = [
     {
@@ -136,8 +138,25 @@ const MOCK_TASKS: Task[] = [
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-    /** Primary task state */
-    readonly tasks = signal<Task[]>(MOCK_TASKS);
+    /** Primary task state — seeded from localStorage, falls back to MOCK_TASKS */
+    readonly tasks = signal<Task[]>(this.#loadTasks());
+
+    constructor() {
+        // Persist any change to localStorage automatically
+        effect(() => {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks()));
+        });
+    }
+
+    #loadTasks(): Task[] {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) return JSON.parse(stored) as Task[];
+        } catch {
+            // Storage unavailable or data corrupted — fall back to mock data
+        }
+        return MOCK_TASKS;
+    }
 
     /** Filter state — resets to 'all' when tasks change */
     readonly selectedStatusFilter = linkedSignal<Task[], TaskStatus | 'all'>({

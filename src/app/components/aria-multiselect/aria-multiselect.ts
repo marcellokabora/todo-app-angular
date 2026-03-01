@@ -124,6 +124,7 @@ import {
 })
 export class AriaMultiselectComponent {
   readonly value = model<string[]>([]);
+  readonly touched = model(false);
   readonly options = input<{ value: string; label: string }[]>([]);
   readonly label = input('Select options');
   readonly placeholder = input('Select...');
@@ -172,6 +173,7 @@ export class AriaMultiselectComponent {
 
   protected close(): void {
     this.isOpen.set(false);
+    this.touched.set(true);
   }
 
   protected toggleOption(val: string): void {
@@ -184,6 +186,7 @@ export class AriaMultiselectComponent {
   protected removeChip(val: string, event: Event): void {
     event.stopPropagation();
     this.value.update((current) => current.filter((v) => v !== val));
+    this.touched.set(true);
   }
 
   protected onKeydown(event: KeyboardEvent): void {

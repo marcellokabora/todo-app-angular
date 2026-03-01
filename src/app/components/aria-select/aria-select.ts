@@ -99,6 +99,7 @@ import {
 })
 export class AriaSelectComponent {
   readonly value = model<string>('');
+  readonly touched = model(false);
   readonly options = input<{ value: string; label: string }[]>([]);
   readonly label = input('Select an option');
   readonly placeholder = input('Select...');
@@ -144,6 +145,7 @@ export class AriaSelectComponent {
   protected close(): void {
     this.isOpen.set(false);
     this.activeIndex.set(-1);
+    this.touched.set(true);
   }
 
   protected select(val: string): void {

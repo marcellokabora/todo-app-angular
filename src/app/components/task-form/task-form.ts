@@ -7,7 +7,7 @@ import {
     signal,
 } from '@angular/core';
 import { form, FormField, required, minLength, maxLength, validate } from '@angular/forms/signals';
-import { TaskFormData, TaskCategory, TaskTag, ALL_CATEGORIES, ALL_TAGS, ALL_PRIORITIES } from '../../models/task.model';
+import { TaskFormData, ALL_CATEGORIES, ALL_TAGS, ALL_PRIORITIES } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
 import { UserService } from '../../services/user.service';
 import { AriaSelectComponent } from '../aria-select/aria-select';
@@ -88,22 +88,6 @@ export class TaskFormComponent {
 
     /** Whether the form is valid */
     readonly isFormValid = computed(() => this.taskForm().valid());
-
-    onPriorityChange(value: string): void {
-        this.taskModel.update((m) => ({ ...m, priority: value as TaskFormData['priority'] }));
-    }
-
-    onCategoryChange(value: string): void {
-        this.taskModel.update((m) => ({ ...m, category: value as TaskCategory }));
-    }
-
-    onTagsChange(value: string[]): void {
-        this.taskModel.update((m) => ({ ...m, tags: value as TaskTag[] }));
-    }
-
-    onAssigneeChange(value: string): void {
-        this.taskModel.update((m) => ({ ...m, assignee: value }));
-    }
 
     /** Submit handler */
     onSubmit(event: SubmitEvent): void {

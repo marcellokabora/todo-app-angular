@@ -21,11 +21,12 @@ const MOCK_USERS: User[] = [
 ];
 
 const MOCK_PASSWORD = '1234';
+const STORAGE_KEY = 'currentUserId';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
     readonly users = signal<User[]>(MOCK_USERS);
-    readonly currentUser = signal<User | null>(null);
+    readonly currentUser = signal<User | null>(this.#loadFromStorage());
     readonly isAuthenticated = computed(() => this.currentUser() !== null);
 
     readonly userNames = computed(() => this.users().map((u) => u.name));
@@ -47,10 +48,18 @@ export class UserService {
         const user = this.users().find((u) => u.email.toLowerCase() === email.toLowerCase());
         if (!user) return false;
         this.currentUser.set(user);
+        localStorage.setItem(STORAGE_KEY, user.id);
         return true;
     }
 
     logout(): void {
         this.currentUser.set(null);
+        localStorage.removeItem(STORAGE_KEY);
+    }
+
+    #loadFromStorage(): User | null {
+        const id = localStorage.getItem(STORAGE_KEY);
+        if (!id) return null;
+        return MOCK_USERS.find((u) => u.id === id) ?? null;
     }
 }

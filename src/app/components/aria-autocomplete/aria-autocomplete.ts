@@ -45,6 +45,7 @@ import {
         [value]="query()"
         (input)="onInput($event)"
         (focus)="onFocus()"
+        (blur)="touched.set(true)"
         autocomplete="off"
         spellcheck="false"
         class="w-full rounded-lg border bg-surface py-2 pl-9 pr-8 text-sm text-heading transition-colors focus:outline-none focus:ring-1 focus:ring-accent-ring"
@@ -134,6 +135,7 @@ import {
 })
 export class AriaAutocompleteComponent {
   readonly value = model<string>('');
+  readonly touched = model(false);
   readonly options = input<{ value: string; label: string }[]>([]);
   readonly label = input('Search');
   readonly placeholder = input('Type to search...');
