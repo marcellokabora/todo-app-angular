@@ -18,7 +18,7 @@ import {
     <div class="relative" (keydown)="onKeydown($event)">
       <!-- Search icon -->
       <svg
-        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-placeholder"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -47,10 +47,10 @@ import {
         (focus)="onFocus()"
         autocomplete="off"
         spellcheck="false"
-        class="w-full rounded-lg border py-2 pl-9 pr-8 text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        class="w-full rounded-lg border bg-surface py-2 pl-9 pr-8 text-sm text-heading transition-colors focus:outline-none focus:ring-1 focus:ring-accent-ring"
         [class]="isOpen()
-          ? 'border-indigo-500 ring-1 ring-indigo-500'
-          : 'border-gray-300'"
+          ? 'border-accent-ring ring-1 ring-accent-ring'
+          : 'border-input-border'"
       />
 
       <!-- Clear button -->
@@ -60,7 +60,7 @@ import {
           aria-label="Clear"
           tabindex="-1"
           (click)="clear()"
-          class="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          class="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-placeholder hover:text-body focus:outline-none focus:ring-1 focus:ring-accent-ring"
         >
           <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
@@ -75,10 +75,10 @@ import {
           role="listbox"
           [attr.aria-label]="label()"
           tabindex="-1"
-          class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg focus:outline-none"
+          class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border bg-surface py-1 shadow-lg focus:outline-none"
         >
           @if (filtered().length === 0) {
-            <li role="presentation" class="px-3 py-2 text-sm text-gray-400 italic">
+            <li role="presentation" class="px-3 py-2 text-sm text-placeholder italic">
               No results found
             </li>
           } @else {
@@ -96,7 +96,7 @@ import {
                 @if (matchStart(opt.label) > -1 && query()) {
                   <span aria-hidden="true">
                     {{ opt.label.slice(0, matchStart(opt.label)) }}<mark
-                      class="bg-indigo-100 text-indigo-800 rounded-sm"
+                      class="bg-accent-lighter text-accent-text-dark rounded-sm"
                       >{{ opt.label.slice(matchStart(opt.label), matchStart(opt.label) + query().length) }}</mark
                     >{{ opt.label.slice(matchStart(opt.label) + query().length) }}
                   </span>
@@ -108,7 +108,7 @@ import {
 
                 @if (opt.value === value()) {
                   <svg
-                    class="ml-auto h-4 w-4 shrink-0 text-indigo-600"
+                    class="ml-auto h-4 w-4 shrink-0 text-accent-text"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -178,9 +178,9 @@ export class AriaAutocompleteComponent {
   protected optionClass(val: string, index: number): string {
     const active = index === this.activeIndex();
     const selected = val === this.value();
-    if (active) return 'bg-indigo-50 text-indigo-700';
-    if (selected) return 'font-medium text-indigo-600';
-    return 'text-gray-700 hover:bg-gray-50';
+    if (active) return 'bg-accent-light text-accent-text-dark';
+    if (selected) return 'font-medium text-accent-text';
+    return 'text-body hover:bg-surface-hover';
   }
 
   protected onFocus(): void {

@@ -32,7 +32,7 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
         <!-- Back link -->
         <a
           routerLink="/tasks"
-          class="mb-4 inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800"
+          class="mb-4 inline-flex items-center gap-1 text-sm text-accent-text hover:text-accent-hover"
         >
           <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
@@ -45,35 +45,35 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
           appHighlight
           [priority]="t.priority"
           [completed]="t.completed"
-          class="mb-6 rounded-xl border border-gray-200 bg-white p-6"
+          class="mb-6 rounded-xl border border-border bg-surface p-6"
         >
           <div class="flex items-start justify-between">
             <div>
-              <h1 class="text-xl font-bold text-gray-900" [class.line-through]="t.completed">
+              <h1 class="text-xl font-bold text-heading" [class.line-through]="t.completed">
                 {{ t.title }}
               </h1>
-              <p class="mt-1 text-sm text-gray-500">
+              <p class="mt-1 text-sm text-muted">
                 Created {{ t.createdAt | relativeTime }} · Due {{ t.dueDate | relativeTime }}
               </p>
             </div>
             <span [class]="priorityBadge()">{{ t.priority }}</span>
           </div>
 
-          <p class="mt-3 text-sm text-gray-600">{{ t.description }}</p>
+          <p class="mt-3 text-sm text-body">{{ t.description }}</p>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <span class="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600">
+            <span class="rounded-full bg-surface-hover px-3 py-1 text-xs text-body">
               {{ t.category }}
             </span>
             @for (tag of t.tags; track tag) {
-              <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs text-indigo-600">
+              <span class="rounded-full bg-accent-light px-3 py-1 text-xs text-accent-text">
                 {{ tag }}
               </span>
             }
           </div>
 
-          <div class="mt-4 text-sm text-gray-500">
-            Assigned to: <strong class="text-gray-700">{{ t.assignee }}</strong>
+          <div class="mt-4 text-sm text-muted">
+            Assigned to: <strong class="text-body">{{ t.assignee }}</strong>
           </div>
         </div>
 
@@ -89,9 +89,9 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
                 class="flex w-full items-center justify-between text-left"
                 [attr.aria-expanded]="detailsExpanded()"
               >
-                <span class="text-sm font-semibold text-gray-700">Task Details</span>
+                <span class="text-sm font-semibold text-body">Task Details</span>
                 <svg
-                  class="h-5 w-5 text-gray-400 transition-transform"
+                  class="h-5 w-5 text-placeholder transition-transform"
                   [class.rotate-180]="detailsExpanded()"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -101,22 +101,22 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
               </button>
               <div ngAccordionPanel panelId="details" role="region">
                 <ng-template ngAccordionContent>
-                  <div class="mt-3 space-y-2 border-t border-gray-100 pt-3 text-sm text-gray-600">
+                  <div class="mt-3 space-y-2 border-t border-border-light pt-3 text-sm text-body">
                     <div class="flex justify-between">
                       <span>Status</span>
-                      <span class="font-medium capitalize text-gray-900">{{ t.status }}</span>
+                      <span class="font-medium capitalize text-heading">{{ t.status }}</span>
                     </div>
                     <div class="flex justify-between">
                       <span>Priority</span>
-                      <span class="font-medium capitalize text-gray-900">{{ t.priority }}</span>
+                      <span class="font-medium capitalize text-heading">{{ t.priority }}</span>
                     </div>
                     <div class="flex justify-between">
                       <span>Category</span>
-                      <span class="font-medium capitalize text-gray-900">{{ t.category }}</span>
+                      <span class="font-medium capitalize text-heading">{{ t.category }}</span>
                     </div>
                     <div class="flex justify-between">
                       <span>Completed</span>
-                      <span class="font-medium text-gray-900">{{ t.completed ? 'Yes' : 'No' }}</span>
+                      <span class="font-medium text-heading">{{ t.completed ? 'Yes' : 'No' }}</span>
                     </div>
                   </div>
                 </ng-template>
@@ -134,9 +134,9 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
                 class="flex w-full items-center justify-between text-left"
                 [attr.aria-expanded]="activityExpanded()"
               >
-                <span class="text-sm font-semibold text-gray-700">Activity Log</span>
+                <span class="text-sm font-semibold text-body">Activity Log</span>
                 <svg
-                  class="h-5 w-5 text-gray-400 transition-transform"
+                  class="h-5 w-5 text-placeholder transition-transform"
                   [class.rotate-180]="activityExpanded()"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -146,13 +146,13 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
               </button>
               <div ngAccordionPanel panelId="activity" role="region">
                 <ng-template ngAccordionContent>
-                  <div class="mt-3 space-y-3 border-t border-gray-100 pt-3">
+                  <div class="mt-3 space-y-3 border-t border-border-light pt-3">
                     @for (entry of activityLog(); track entry.date) {
                       <div class="flex items-start gap-3 text-sm">
-                        <div class="mt-1 h-2 w-2 rounded-full bg-indigo-400"></div>
+                        <div class="mt-1 h-2 w-2 rounded-full bg-accent"></div>
                         <div>
-                          <p class="text-gray-700">{{ entry.action }}</p>
-                          <p class="text-xs text-gray-400">{{ entry.date | relativeTime }}</p>
+                          <p class="text-body">{{ entry.action }}</p>
+                          <p class="text-xs text-muted">{{ entry.date | relativeTime }}</p>
                         </div>
                       </div>
                     }
@@ -172,9 +172,9 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
                 class="flex w-full items-center justify-between text-left"
                 [attr.aria-expanded]="commentsExpanded()"
               >
-                <span class="text-sm font-semibold text-gray-700">Comments</span>
+                <span class="text-sm font-semibold text-body">Comments</span>
                 <svg
-                  class="h-5 w-5 text-gray-400 transition-transform"
+                  class="h-5 w-5 text-placeholder transition-transform"
                   [class.rotate-180]="commentsExpanded()"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -184,25 +184,25 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
               </button>
               <div ngAccordionPanel panelId="comments" role="region">
                 @defer (on viewport) {
-                  <div class="mt-3 space-y-3 border-t border-gray-100 pt-3">
+                  <div class="mt-3 space-y-3 border-t border-border-light pt-3">
                     @for (comment of comments(); track comment.id) {
-                      <div class="rounded-lg bg-gray-50 p-3 text-sm">
+                      <div class="rounded-lg bg-surface-alt p-3 text-sm">
                         <div class="flex items-center justify-between">
-                          <span class="font-medium text-gray-700">{{ comment.author }}</span>
-                          <span class="text-xs text-gray-400">{{ comment.date | relativeTime }}</span>
+                          <span class="font-medium text-body">{{ comment.author }}</span>
+                          <span class="text-xs text-muted">{{ comment.date | relativeTime }}</span>
                         </div>
-                        <p class="mt-1 text-gray-600">{{ comment.text }}</p>
+                        <p class="mt-1 text-body">{{ comment.text }}</p>
                       </div>
                     }
                   </div>
                 } @placeholder {
-                  <div class="mt-3 border-t border-gray-100 pt-3 text-center text-sm text-gray-400">
+                  <div class="mt-3 border-t border-border-light pt-3 text-center text-sm text-muted">
                     Scroll to load comments
                   </div>
                 } @loading {
-                  <div class="mt-3 space-y-2 border-t border-gray-100 pt-3">
-                    <div class="h-16 animate-pulse rounded-lg bg-gray-100"></div>
-                    <div class="h-16 animate-pulse rounded-lg bg-gray-100"></div>
+                  <div class="mt-3 space-y-2 border-t border-border-light pt-3">
+                    <div class="h-16 animate-pulse rounded-lg bg-surface-hover"></div>
+                    <div class="h-16 animate-pulse rounded-lg bg-surface-hover"></div>
                   </div>
                 }
               </div>
@@ -211,9 +211,9 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
         </div>
       </div>
     } @else {
-      <div class="flex flex-col items-center justify-center py-24 text-gray-400">
+      <div class="flex flex-col items-center justify-center py-24 text-muted">
         <p class="text-lg">Task not found</p>
-        <a routerLink="/tasks" class="mt-2 text-sm text-indigo-600 hover:underline">
+        <a routerLink="/tasks" class="mt-2 text-sm text-accent-text hover:underline">
           Return to Tasks
         </a>
       </div>
@@ -233,10 +233,10 @@ export default class TaskDetailComponent {
     if (!t) return '';
     const base = 'rounded-full px-3 py-1 text-xs font-medium capitalize';
     const colorMap: Record<string, string> = {
-      urgent: 'bg-red-100 text-red-700',
-      high: 'bg-amber-100 text-amber-700',
-      medium: 'bg-indigo-100 text-indigo-700',
-      low: 'bg-green-100 text-green-700',
+      urgent: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+      high: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+      medium: 'bg-accent-lighter text-accent-text-dark',
+      low: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
     };
     return `${base} ${colorMap[t.priority] ?? colorMap['medium']}`;
   });

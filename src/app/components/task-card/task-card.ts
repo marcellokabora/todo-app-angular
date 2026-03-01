@@ -16,7 +16,7 @@ import { fadeInOut } from '../../animations/task.animations';
       appHighlight
       [priority]="task().priority"
       [completed]="task().completed"
-      class="group rounded-lg border border-gray-200 bg-white p-4 transition-all hover:shadow-md"
+      class="group rounded-lg border border-border bg-surface p-4 transition-all hover:shadow-md"
       [attr.aria-label]="'Task: ' + task().title"
     >
       <div class="mb-2 flex items-start justify-between">
@@ -26,7 +26,7 @@ import { fadeInOut } from '../../animations/task.animations';
             class="flex h-5 w-5 items-center justify-center rounded border-2 transition-colors"
             [class]="task().completed
               ? 'border-green-500 bg-green-500 text-white'
-              : 'border-gray-300 hover:border-indigo-400'"
+              : 'border-input-border hover:border-accent-ring'"
             [attr.aria-label]="task().completed ? 'Mark as incomplete' : 'Mark as complete'"
           >
             @if (task().completed) {
@@ -37,9 +37,9 @@ import { fadeInOut } from '../../animations/task.animations';
           </button>
           <a
             [routerLink]="['/task', task().id]"
-            class="text-sm font-semibold text-gray-900 hover:text-indigo-600 hover:underline"
+            class="text-sm font-semibold text-heading hover:text-accent-text hover:underline"
             [class.line-through]="task().completed"
-            [class.text-gray-400]="task().completed"
+            [class.text-muted]="task().completed"
           >
             {{ task().title }}
           </a>
@@ -47,7 +47,7 @@ import { fadeInOut } from '../../animations/task.animations';
         <div class="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
           <button
             (click)="deleted.emit(task().id)"
-            class="rounded p-1 text-gray-400 hover:bg-red-50 hover:text-red-500"
+            class="rounded p-1 text-muted hover:bg-red-50 hover:text-red-500"
             aria-label="Delete task"
           >
             <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -58,7 +58,7 @@ import { fadeInOut } from '../../animations/task.animations';
       </div>
 
       @if (task().description) {
-        <p class="mb-3 line-clamp-2 text-xs text-gray-500">
+        <p class="mb-3 line-clamp-2 text-xs text-muted">
           {{ task().description }}
         </p>
       }
@@ -67,17 +67,17 @@ import { fadeInOut } from '../../animations/task.animations';
         <span [class]="priorityBadge()">
           {{ task().priority }}
         </span>
-        <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+        <span class="rounded-full bg-surface-hover px-2 py-0.5 text-xs text-body">
           {{ task().category }}
         </span>
         @for (tag of task().tags; track tag) {
-          <span class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs text-indigo-600">
+          <span class="rounded-full bg-accent-light px-2 py-0.5 text-xs text-accent-text">
             {{ tag }}
           </span>
         }
       </div>
 
-      <div class="flex items-center justify-between text-xs text-gray-400">
+      <div class="flex items-center justify-between text-xs text-muted">
         <span>{{ task().assignee }}</span>
         <span [class]="dueDateClass()">
           Due {{ task().dueDate | relativeTime }}
@@ -94,10 +94,10 @@ export class TaskCardComponent {
   protected readonly priorityBadge = computed(() => {
     const base = 'rounded-full px-2 py-0.5 text-xs font-medium capitalize';
     const colorMap: Record<string, string> = {
-      urgent: 'bg-red-100 text-red-700',
-      high: 'bg-amber-100 text-amber-700',
-      medium: 'bg-indigo-100 text-indigo-700',
-      low: 'bg-green-100 text-green-700',
+      urgent: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+      high: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+      medium: 'bg-accent-lighter text-accent-text-dark',
+      low: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
     };
     return `${base} ${colorMap[this.task().priority] ?? colorMap['medium']}`;
   });
@@ -105,10 +105,10 @@ export class TaskCardComponent {
   protected readonly dueDateClass = computed(() => {
     const dueDate = new Date(this.task().dueDate);
     const now = new Date();
-    if (this.task().completed) return 'text-gray-400';
+    if (this.task().completed) return 'text-muted';
     if (dueDate < now) return 'text-red-500 font-medium';
     const diffDays = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
     if (diffDays <= 2) return 'text-amber-500 font-medium';
-    return 'text-gray-400';
+    return 'text-muted';
   });
 }

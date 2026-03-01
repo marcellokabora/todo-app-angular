@@ -1,11 +1,11 @@
 <form (submit)="onSubmit($event)" class="space-y-5">
     <!-- Title -->
     <div>
-        <label for="title" class="mb-1 block text-sm font-medium text-gray-700">
+        <label for="title" class="mb-1 block text-sm font-medium text-body">
             Title <span class="text-red-500">*</span>
         </label>
         <input id="title" type="text" [formField]="taskForm.title" placeholder="Enter task title..."
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            class="w-full rounded-lg border border-input-border bg-surface px-3 py-2 text-sm text-heading transition-colors focus:border-accent-ring focus:ring-1 focus:ring-accent-ring"
             [class.border-red-300]="taskForm.title().touched() && !taskForm.title().valid()"
             [attr.aria-describedby]="taskForm.title().touched() && !taskForm.title().valid() ? 'title-error' : null"
             [attr.aria-invalid]="taskForm.title().touched() && !taskForm.title().valid()" />
@@ -20,11 +20,11 @@
 
     <!-- Description -->
     <div>
-        <label for="description" class="mb-1 block text-sm font-medium text-gray-700">
+        <label for="description" class="mb-1 block text-sm font-medium text-body">
             Description
         </label>
         <textarea id="description" [formField]="taskForm.description" placeholder="Describe the task..." rows="3"
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            class="w-full rounded-lg border border-input-border bg-surface px-3 py-2 text-sm text-heading transition-colors focus:border-accent-ring focus:ring-1 focus:ring-accent-ring"
             [class.border-red-300]="taskForm.description().touched() && !taskForm.description().valid()"
             [attr.aria-describedby]="taskForm.description().touched() && !taskForm.description().valid() ? 'desc-error' : null"
             [attr.aria-invalid]="taskForm.description().touched() && !taskForm.description().valid()"></textarea>
@@ -40,7 +40,7 @@
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <!-- Priority -->
         <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700">
+            <label class="mb-1 block text-sm font-medium text-body">
                 Priority <span class="text-red-500">*</span>
             </label>
             <app-aria-select [value]="taskModel().priority" (valueChange)="onPriorityChange($event)"
@@ -49,7 +49,7 @@
 
         <!-- Category -->
         <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700">
+            <label class="mb-1 block text-sm font-medium text-body">
                 Category <span class="text-red-500">*</span>
             </label>
             <app-aria-select [value]="taskModel().category" (valueChange)="onCategoryChange($event)"
@@ -59,7 +59,7 @@
 
     <!-- Tags -->
     <div>
-        <label class="mb-1 block text-sm font-medium text-gray-700">
+        <label class="mb-1 block text-sm font-medium text-body">
             Tags <span class="text-red-500">*</span>
         </label>
         <app-aria-multiselect [value]="taskModel().tags" (valueChange)="onTagsChange($event)" [options]="tagOptions"
@@ -75,7 +75,7 @@
 
     <!-- Assignee (Aria Autocomplete) -->
     <div>
-        <label class="mb-1 block text-sm font-medium text-gray-700">
+        <label class="mb-1 block text-sm font-medium text-body">
             Assignee <span class="text-red-500">*</span>
         </label>
         <app-aria-autocomplete [value]="taskModel().assignee" (valueChange)="onAssigneeChange($event)"
@@ -91,11 +91,11 @@
 
     <!-- Due Date -->
     <div>
-        <label for="dueDate" class="mb-1 block text-sm font-medium text-gray-700">
+        <label for="dueDate" class="mb-1 block text-sm font-medium text-body">
             Due Date <span class="text-red-500">*</span>
         </label>
         <input id="dueDate" type="date" [formField]="taskForm.dueDate"
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            class="w-full rounded-lg border border-input-border bg-surface px-3 py-2 text-sm text-heading transition-colors focus:border-accent-ring focus:ring-1 focus:ring-accent-ring"
             [class.border-red-300]="taskForm.dueDate().touched() && !taskForm.dueDate().valid()"
             [attr.aria-describedby]="taskForm.dueDate().touched() && !taskForm.dueDate().valid() ? 'date-error' : null"
             [attr.aria-invalid]="taskForm.dueDate().touched() && !taskForm.dueDate().valid()" />
@@ -111,7 +111,7 @@
     <!-- Submit -->
     <div class="flex justify-end pt-2">
         <button type="submit" [disabled]="!isFormValid()"
-            class="rounded-lg bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            class="rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover focus:ring-2 focus:ring-accent-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
             Add Task
         </button>
     </div>

@@ -26,16 +26,16 @@ import {
         [attr.aria-controls]="listboxId"
         [attr.aria-activedescendant]="activeDescendant()"
         (click)="toggle()"
-        class="flex w-full items-center justify-between rounded-lg border bg-white px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        class="flex w-full items-center justify-between rounded-lg border bg-surface px-3 py-2 text-sm text-heading transition-colors focus:outline-none focus:ring-1 focus:ring-accent-ring"
         [class]="isOpen()
-          ? 'border-indigo-500 ring-1 ring-indigo-500'
-          : 'border-gray-300 hover:border-gray-400'"
+          ? 'border-accent-ring ring-1 ring-accent-ring'
+          : 'border-input-border hover:border-muted'"
       >
-        <span [class]="selectedLabel() ? 'text-gray-900' : 'text-gray-400'">
+        <span [class]="selectedLabel() ? 'text-heading' : 'text-placeholder'">
           {{ selectedLabel() || placeholder() }}
         </span>
         <svg
-          class="h-4 w-4 shrink-0 text-gray-400 transition-transform duration-150"
+          class="h-4 w-4 shrink-0 text-placeholder transition-transform duration-150"
           [style.transform]="isOpen() ? 'rotate(180deg)' : 'rotate(0deg)'"
           viewBox="0 0 20 20"
           fill="currentColor"
@@ -57,7 +57,7 @@ import {
           role="listbox"
           [attr.aria-label]="label()"
           tabindex="-1"
-          class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg focus:outline-none"
+          class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border bg-surface py-1 shadow-lg focus:outline-none"
         >
           @for (opt of options(); track opt.value; let i = $index) {
             <li
@@ -71,7 +71,7 @@ import {
             >
               @if (opt.value === value()) {
                 <svg
-                  class="h-4 w-4 shrink-0 text-indigo-600"
+                  class="h-4 w-4 shrink-0 text-accent-text"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -126,9 +126,9 @@ export class AriaSelectComponent {
   protected optionClass(val: string, index: number): string {
     const active = index === this.activeIndex();
     const selected = val === this.value();
-    if (active) return 'bg-indigo-50 text-indigo-700';
-    if (selected) return 'font-medium text-indigo-600';
-    return 'text-gray-700 hover:bg-gray-50';
+    if (active) return 'bg-accent-light text-accent-text-dark';
+    if (selected) return 'font-medium text-accent-text';
+    return 'text-body hover:bg-surface-hover';
   }
 
   protected toggle(): void {

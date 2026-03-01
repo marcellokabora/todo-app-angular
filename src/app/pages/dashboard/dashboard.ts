@@ -25,8 +25,8 @@ import { fadeInOut } from '../../animations/task.animations';
   template: `
     <div class="mx-auto max-w-5xl px-4 py-6">
       <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p class="text-sm text-gray-500">
+        <h1 class="text-2xl font-bold text-heading">Dashboard</h1>
+        <p class="text-sm text-muted">
           {{ taskService.taskStats().total }} tasks ·
           {{ taskService.taskStats().completed }} completed ·
           {{ taskService.taskStats().pending }} pending
@@ -37,15 +37,15 @@ import { fadeInOut } from '../../animations/task.animations';
         <div
           ngTabList
           [(selectedTab)]="selectedTab"
-          class="mb-6 flex gap-1 rounded-lg bg-gray-100 p-1"
+          class="mb-6 flex gap-1 rounded-lg bg-surface-hover p-1"
           aria-label="Dashboard tabs"
         >
           <button
             ngTab value="tasks"
             class="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors"
             [class]="selectedTab() === 'tasks'
-              ? 'bg-white text-indigo-700 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'"
+              ? 'bg-surface text-accent-text-dark shadow-sm'
+              : 'text-body hover:text-heading'"
           >
             All Tasks
           </button>
@@ -53,8 +53,8 @@ import { fadeInOut } from '../../animations/task.animations';
             ngTab value="add"
             class="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors"
             [class]="selectedTab() === 'add'
-              ? 'bg-white text-indigo-700 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'"
+              ? 'bg-surface text-accent-text-dark shadow-sm'
+              : 'text-body hover:text-heading'"
           >
             Add Task
           </button>
@@ -62,8 +62,8 @@ import { fadeInOut } from '../../animations/task.animations';
             ngTab value="stats"
             class="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors"
             [class]="selectedTab() === 'stats'
-              ? 'bg-white text-indigo-700 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'"
+              ? 'bg-surface text-accent-text-dark shadow-sm'
+              : 'text-body hover:text-heading'"
           >
             Statistics
           </button>
@@ -75,26 +75,26 @@ import { fadeInOut } from '../../animations/task.animations';
             <div @fadeInOut>
               <!-- Filters -->
               <div class="mb-4 flex flex-wrap gap-2">
-                <span class="text-xs font-medium text-gray-500 self-center">Status:</span>
+                <span class="text-xs font-medium text-muted self-center">Status:</span>
                 @for (s of statuses; track s.value) {
                   <button
                     (click)="taskService.selectedStatusFilter.set(s.value)"
                     class="rounded-full px-3 py-1 text-xs font-medium transition-colors"
                     [class]="taskService.selectedStatusFilter() === s.value
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                      ? 'bg-accent text-white'
+                      : 'bg-surface-hover text-body hover:bg-border'"
                   >
                     {{ s.label }}
                   </button>
                 }
-                <span class="ml-2 text-xs font-medium text-gray-500 self-center">Priority:</span>
+                <span class="ml-2 text-xs font-medium text-muted self-center">Priority:</span>
                 @for (p of priorities; track p.value) {
                   <button
                     (click)="taskService.selectedPriorityFilter.set(p.value)"
                     class="rounded-full px-3 py-1 text-xs font-medium transition-colors"
                     [class]="taskService.selectedPriorityFilter() === p.value
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                      ? 'bg-accent text-white'
+                      : 'bg-surface-hover text-body hover:bg-border'"
                   >
                     {{ p.label }}
                   </button>
@@ -110,8 +110,8 @@ import { fadeInOut } from '../../animations/task.animations';
         <div ngTabPanel value="add">
           <ng-template ngTabContent>
             <div @fadeInOut class="mx-auto max-w-2xl">
-              <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <h2 class="mb-4 text-lg font-semibold text-gray-900">Create New Task</h2>
+              <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+                <h2 class="mb-4 text-lg font-semibold text-heading">Create New Task</h2>
                 <app-task-form (taskAdded)="onTaskAdded($event)" />
               </div>
             </div>

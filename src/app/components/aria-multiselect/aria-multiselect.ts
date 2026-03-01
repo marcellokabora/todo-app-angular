@@ -26,17 +26,17 @@ import {
         [attr.aria-controls]="listboxId"
         [attr.aria-activedescendant]="activeDescendant()"
         (click)="toggle()"
-        class="flex min-h-9.5 w-full flex-wrap items-center gap-1.5 rounded-lg border bg-white px-3 py-1.5 text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        class="flex min-h-9.5 w-full flex-wrap items-center gap-1.5 rounded-lg border bg-surface px-3 py-1.5 text-sm text-heading transition-colors focus:outline-none focus:ring-1 focus:ring-accent-ring"
         [class]="isOpen()
-          ? 'border-indigo-500 ring-1 ring-indigo-500'
-          : 'border-gray-300 hover:border-gray-400'"
+          ? 'border-accent-ring ring-1 ring-accent-ring'
+          : 'border-input-border hover:border-muted'"
       >
         @if (selectedOptions().length === 0) {
-          <span class="text-gray-400">{{ placeholder() }}</span>
+          <span class="text-placeholder">{{ placeholder() }}</span>
         } @else {
           @for (opt of selectedOptions(); track opt.value) {
             <span
-              class="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700"
+              class="inline-flex items-center gap-1 rounded-full bg-accent-lighter px-2 py-0.5 text-xs font-medium text-accent-text-dark"
             >
               {{ opt.label }}
               <span
@@ -46,7 +46,7 @@ import {
                 (click)="removeChip(opt.value, $event)"
                 (keydown.enter)="removeChip(opt.value, $event)"
                 (keydown.space)="removeChip(opt.value, $event)"
-                class="cursor-pointer rounded-full p-0.5 hover:bg-indigo-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                class="cursor-pointer rounded-full p-0.5 hover:bg-accent-light focus:outline-none focus:ring-1 focus:ring-accent-ring"
                 aria-hidden="false"
               >
                 <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -57,7 +57,7 @@ import {
           }
         }
         <svg
-          class="ml-auto h-4 w-4 shrink-0 text-gray-400 transition-transform duration-150"
+          class="ml-auto h-4 w-4 shrink-0 text-placeholder transition-transform duration-150"
           [style.transform]="isOpen() ? 'rotate(180deg)' : 'rotate(0deg)'"
           viewBox="0 0 20 20"
           fill="currentColor"
@@ -80,7 +80,7 @@ import {
           aria-multiselectable="true"
           [attr.aria-label]="label()"
           tabindex="-1"
-          class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg focus:outline-none"
+          class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border bg-surface py-1 shadow-lg focus:outline-none"
         >
           @for (opt of options(); track opt.value; let i = $index) {
             <li
@@ -96,8 +96,8 @@ import {
               <span
                 class="flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors"
                 [class]="isSelected(opt.value)
-                  ? 'border-indigo-600 bg-indigo-600'
-                  : 'border-gray-300 bg-white'"
+                  ? 'border-accent bg-accent'
+                  : 'border-input-border bg-surface'"
                 aria-hidden="true"
               >
                 @if (isSelected(opt.value)) {
@@ -155,10 +155,10 @@ export class AriaMultiselectComponent {
   protected optionClass(val: string, index: number): string {
     const active = index === this.activeIndex();
     const selected = this.isSelected(val);
-    if (active && selected) return 'bg-indigo-50 text-indigo-700 font-medium';
-    if (active) return 'bg-indigo-50 text-indigo-700';
-    if (selected) return 'font-medium text-indigo-600';
-    return 'text-gray-700 hover:bg-gray-50';
+    if (active && selected) return 'bg-accent-light text-accent-text-dark font-medium';
+    if (active) return 'bg-accent-light text-accent-text-dark';
+    if (selected) return 'font-medium text-accent-text';
+    return 'text-body hover:bg-surface-hover';
   }
 
   protected toggle(): void {

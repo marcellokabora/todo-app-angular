@@ -18,10 +18,10 @@ export class HighlightDirective {
 
     protected readonly borderStyle = computed(() => {
         const colorMap: Record<string, string> = {
-            urgent: '4px solid #ef4444',
-            high: '4px solid #f59e0b',
-            medium: '4px solid #6366f1',
-            low: '4px solid #22c55e',
+            urgent: '4px solid var(--color-danger)',
+            high: '4px solid var(--color-warning)',
+            medium: '4px solid var(--color-accent)',
+            low: '4px solid var(--color-success)',
         };
         return colorMap[this.priority()] ?? colorMap['medium'];
     });

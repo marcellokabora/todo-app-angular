@@ -7,6 +7,7 @@ import {
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Toolbar, ToolbarWidget } from '@angular/aria/toolbar';
 import { TaskService } from './services/task.service';
+import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher';
 import { slideIn } from './animations/task.animations';
 
 @Component({
@@ -18,6 +19,7 @@ import { slideIn } from './animations/task.animations';
     RouterLinkActive,
     Toolbar,
     ToolbarWidget,
+    ThemeSwitcherComponent,
   ],
   animations: [slideIn],
   templateUrl: './app.html',
