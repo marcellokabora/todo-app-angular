@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { AriaAutocompleteComponent } from '../../components/aria-autocomplete/aria-autocomplete';
 
 @Component({
     selector: 'app-login',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, AriaAutocompleteComponent],
     template: `
         <div class="flex min-h-screen items-center justify-center bg-surface-alt px-4">
             <div class="w-full max-w-sm">
@@ -51,23 +52,13 @@ import { UserService } from '../../services/user.service';
                         <label for="email" class="mb-1 block text-sm font-medium text-heading">
                             Email
                         </label>
-                        <input
-                            id="email"
-                            type="email"
-                            formControlName="email"
-                            autocomplete="email"
-                            class="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-heading placeholder-muted outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
-                            placeholder="alice@example.com"
-                            [attr.aria-describedby]="
-                                form.controls.email.invalid && form.controls.email.touched
-                                    ? 'email-error'
-                                    : null
-                            "
-                            [attr.aria-invalid]="
-                                form.controls.email.invalid && form.controls.email.touched
-                            "
+                        <app-aria-autocomplete
+                            [(value)]="selectedEmail"
+                            [options]="emailOptions()"
+                            label="Email"
+                            placeholder="Choose your email"
                         />
-                        @if (form.controls.email.invalid && form.controls.email.touched) {
+                        @if (showEmailError()) {
                             <p id="email-error" class="mt-1 text-xs text-red-600 dark:text-red-400">
                                 Please enter a valid email address.
                             </p>
@@ -113,7 +104,7 @@ import { UserService } from '../../services/user.service';
                     </button>
 
                     <p class="mt-4 text-center text-xs text-muted">
-                        Use any user email with password
+                        Pick a registered user email from the dropdown and use password
                         <code class="rounded bg-surface-hover px-1.5 py-0.5 font-mono">1234</code>
                     </p>
                 </form>
@@ -127,13 +118,29 @@ export default class LoginComponent {
     private readonly fb = inject(FormBuilder);
 
     protected readonly errorMessage = signal('');
+    protected readonly selectedEmail = signal('');
+
+    protected readonly emailOptions = computed(() =>
+        this.userService.users().map((user) => ({ value: user.email, label: user.email })),
+    );
 
     protected readonly form = this.fb.nonNullable.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required]],
     });
 
+    protected readonly showEmailError = computed(
+        () => this.form.controls.email.invalid && this.form.controls.email.touched,
+    );
+
+    constructor() {
+        effect(() => {
+            this.form.controls.email.setValue(this.selectedEmail(), { emitEvent: false });
+        });
+    }
+
     protected onSubmit(): void {
+        this.form.markAllAsTouched();
         if (this.form.invalid) return;
 
         const { email, password } = this.form.getRawValue();
@@ -143,7 +150,7 @@ export default class LoginComponent {
             this.errorMessage.set('');
             this.router.navigateByUrl('/tasks');
         } else {
-            this.errorMessage.set('Invalid email or password. Use any user email with password 1234.');
+            this.errorMessage.set('Invalid email or password. Use any registered user email with password 1234.');
         }
     }
 }

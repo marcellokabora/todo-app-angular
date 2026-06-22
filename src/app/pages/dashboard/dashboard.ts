@@ -112,7 +112,7 @@ import { fadeInOut } from '../../animations/task.animations';
             <div @fadeInOut class="mx-auto max-w-2xl">
               <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
                 <h2 class="mb-4 text-lg font-semibold text-heading">Create New Task</h2>
-                <app-task-form (taskAdded)="onTaskAdded($event)" />
+                <app-task-form (taskSaved)="onTaskAdded($event)" />
               </div>
             </div>
           </ng-template>

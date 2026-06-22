@@ -23,6 +23,11 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/add-task/add-task'),
             },
             {
+                path: 'task/:id/edit',
+                loadComponent: () => import('./pages/add-task/add-task'),
+                resolve: { task: taskResolver },
+            },
+            {
                 path: 'statistics',
                 loadComponent: () => import('./pages/statistics/statistics'),
             },

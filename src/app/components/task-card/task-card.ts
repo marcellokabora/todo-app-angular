@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Task } from '../../models/task.model';
 import { RelativeTimePipe } from '../../pipes/relative-time.pipe';
@@ -44,7 +44,16 @@ import { fadeInOut } from '../../animations/task.animations';
             {{ task().title }}
           </a>
         </div>
-        <div class="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+        <div class="flex gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
+          <a
+            [routerLink]="['/task', task().id, 'edit']"
+            class="rounded p-1 text-muted hover:bg-surface-hover hover:text-accent-text"
+            aria-label="Edit task"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M13.586 3a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-8.793 8.793a2 2 0 0 1-.878.51l-3.216.804a.75.75 0 0 1-.91-.91l.804-3.216a2 2 0 0 1 .51-.878L13.586 3Zm1.768 1.06a.5.5 0 0 0-.707 0l-.854.854 1.414 1.415.854-.854a.5.5 0 0 0 0-.708l-.707-.707Zm-1.914 2.268-1.414-1.415-6.28 6.28a.5.5 0 0 0-.127.22l-.52 2.08 2.08-.52a.5.5 0 0 0 .22-.128l6.04-6.04Z" />
+            </svg>
+          </a>
           <button
             (click)="deleted.emit(task().id)"
             class="rounded p-1 text-muted hover:bg-red-50 hover:text-red-500"

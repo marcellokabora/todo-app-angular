@@ -56,7 +56,15 @@ import { fadeInOut, expandCollapse } from '../../animations/task.animations';
                 Created {{ t.createdAt | relativeTime }} · Due {{ t.dueDate | relativeTime }}
               </p>
             </div>
-            <span [class]="priorityBadge()">{{ t.priority }}</span>
+            <div class="flex items-center gap-2">
+              <a
+                [routerLink]="['/task', t.id, 'edit']"
+                class="rounded-md border border-border px-3 py-1 text-xs font-medium text-body transition-colors hover:bg-surface-hover hover:text-accent-text"
+              >
+                Edit Task
+              </a>
+              <span [class]="priorityBadge()">{{ t.priority }}</span>
+            </div>
           </div>
 
           <p class="mt-3 text-sm text-body">{{ t.description }}</p>

@@ -23,7 +23,7 @@ import { staggerList } from '../../animations/task.animations';
           <app-task-card
             [task]="task"
             (toggleCompleted)="taskService.toggleComplete($event)"
-            (deleted)="taskService.deleteTask($event)"
+            (deleted)="confirmDelete($event)"
           />
         }
       </div>
@@ -32,4 +32,11 @@ import { staggerList } from '../../animations/task.animations';
 })
 export class TaskListComponent {
   protected readonly taskService = inject(TaskService);
+
+  confirmDelete(taskId: string): void {
+    const shouldDelete = confirm('Delete this task? This action cannot be undone.');
+    if (!shouldDelete) return;
+
+    this.taskService.deleteTask(taskId);
+  }
 }

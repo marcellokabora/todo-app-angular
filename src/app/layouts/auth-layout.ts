@@ -46,8 +46,9 @@ import { slideIn } from '../animations/task.animations';
                             ngToolbarWidget
                             value="tasks"
                             routerLink="/tasks"
-                            routerLinkActive="text-accent-text"
-                            [routerLinkActiveOptions]="{ exact: true }"
+                            routerLinkActive="bg-surface-hover text-heading shadow-sm"
+                            [routerLinkActiveOptions]="{ exact: false }"
+                            ariaCurrentWhenActive="page"
                             class="rounded-lg px-3 py-1.5 text-sm font-medium text-body transition-colors hover:bg-surface-hover hover:text-heading"
                         >
                             Tasks
@@ -56,7 +57,8 @@ import { slideIn } from '../animations/task.animations';
                             ngToolbarWidget
                             value="add-task"
                             routerLink="/add-task"
-                            routerLinkActive="text-accent-text"
+                            routerLinkActive="bg-surface-hover text-heading shadow-sm"
+                            ariaCurrentWhenActive="page"
                             class="rounded-lg px-3 py-1.5 text-sm font-medium text-body transition-colors hover:bg-surface-hover hover:text-heading"
                         >
                             Add Task
@@ -65,7 +67,8 @@ import { slideIn } from '../animations/task.animations';
                             ngToolbarWidget
                             value="statistics"
                             routerLink="/statistics"
-                            routerLinkActive="text-accent-text"
+                            routerLinkActive="bg-surface-hover text-heading shadow-sm"
+                            ariaCurrentWhenActive="page"
                             class="rounded-lg px-3 py-1.5 text-sm font-medium text-body transition-colors hover:bg-surface-hover hover:text-heading"
                         >
                             Statistics
